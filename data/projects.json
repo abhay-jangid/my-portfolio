@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ai-ad-generator",
+    "title": "AI Image to Ad Script Generator",
+    "category": "AI & ML",
+    "tags": ["Python", "Computer Vision", "Prompt Engineering"],
+    "description": "Analyzes product imagery to generate marketing video scripts and structured prompts for automated ad generation.",
+    "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1600&auto=format&fit=crop",
+    "aspect": "aspect-[16/11]",
+    "year": "2025",
+    "github": "https://github.com/abhay-jangid",
+    "live": "#"
+  },
+  {
+    "id": "shortest-path-finder",
+    "title": "Shortest Path Route Optimizer",
+    "category": "Algorithms",
+    "tags": ["Python", "DSA", "Graph Algorithms"],
+    "description": "Route optimization system determining shortest paths and traversal metrics across multi-node geospatial networks.",
+    "image": "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1600&auto=format&fit=crop",
+    "aspect": "aspect-[16/11]",
+    "year": "2025",
+    "github": "https://github.com/abhay-jangid",
+    "live": "#"
+  },
+  {
+    "id": "product-expiry-alert",
+    "title": "Product Expiry Alert System",
+    "category": "Systems",
+    "tags": ["Python", "Inventory Management", "Automation"],
+    "description": "Inventory tracking system dispatching proactive notifications before item expiration to reduce retail waste.",
+    "image": "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1600&auto=format&fit=crop",
+    "aspect": "aspect-[16/11]",
+    "year": "2024",
+    "github": "https://github.com/abhay-jangid",
+    "live": "#"
+  },
+  {
+    "id": "evolv-fitness",
+    "title": "EVOLV — Fitness Intelligence Engine",
+    "category": "Full-Stack",
+    "tags": ["React", "TypeScript", "Vision AI", "Tailwind CSS"],
+    "description": "Athletic progression engine with double-progression algorithms and vision-based physique auditing.",
+    "image": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop",
+    "aspect": "aspect-[16/11]",
+    "year": "2026",
+    "github": "https://github.com/abhay-jangid",
+    "live": "#"
+  },
+  {
+    "id": "devops-pipeline",
+    "title": "Containerized Deployment Runtime",
+    "category": "Cloud & DevOps",
+    "tags": ["Docker", "Linux", "Git", "AWS"],
+    "description": "Automated container virtualization, Linux environment provisioning, and continuous deployment workflows.",
+    "image": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1600&auto=format&fit=crop",
+    "aspect": "aspect-[16/11]",
+    "year": "2026",
+    "github": "https://github.com/abhay-jangid",
+    "live": "#"
+  }
+]
