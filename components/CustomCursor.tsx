@@ -31,26 +31,30 @@ export default function CustomCursor() {
   return (
     <motion.div
       aria-hidden="true"
-      className="pointer-events-none fixed left-0 top-0 z-[70] flex items-center justify-center rounded-full mix-blend-difference"
+      className="hardware-accelerated pointer-events-none fixed left-0 top-0 z-[70] flex items-center justify-center rounded-full"
       style={{ x: sx, y: sy, translateX: "-50%", translateY: "-50%" }}
       animate={{
-        width: label ? 96 : 10,
-        height: label ? 96 : 10,
+        width: label ? 104 : 10,
+        height: label ? 36 : 10,
       }}
-      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
     >
       <motion.div
-        className="absolute inset-0 rounded-full"
-        style={{ backgroundColor: "#F4EFEB" }}
+        className={`absolute inset-0 ${
+          label
+            ? "rounded-full bg-stone-900 text-white border border-blue-500/50 shadow-xl backdrop-blur-md"
+            : "rounded-full bg-blue-600 shadow-md"
+        }`}
       />
       {label && (
         <motion.span
           initial={{ opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.6 }}
-          transition={{ duration: 0.2 }}
-          className="relative text-[11px] font-mono font-medium uppercase tracking-wider text-carbon px-2 text-center"
+          transition={{ duration: 0.15 }}
+          className="relative text-[10px] font-mono font-semibold uppercase tracking-wider text-white px-3 text-center flex items-center gap-1.5"
         >
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
           {label}
         </motion.span>
       )}

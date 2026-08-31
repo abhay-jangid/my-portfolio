@@ -3,47 +3,67 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { soundFx } from "@/lib/audioEngine";
+import { Cloud, Cpu, Sparkles, Terminal } from "lucide-react";
 
 const capabilities = [
   {
     title: "Cloud & DevOps",
-    icon: "☁️",
-    desc: "Infrastructure as Code, container orchestration, Linux systems, and automated CI/CD delivery pipelines.",
-    tags: ["Docker", "Linux (Bash)", "AWS", "Git / GitHub Actions", "CI/CD", "Nginx"],
+    badge: "INFRASTRUCTURE",
+    icon: <Cloud className="w-6 h-6 text-cyan-400" />,
+    iconRing: "bg-cyan-500/10 border-cyan-500/30 group-hover:border-cyan-400 group-hover:shadow-glow-cyan",
+    desc: "Infrastructure as Code, container orchestration, Linux kernel environments, and automated CI/CD deployment pipelines.",
+    status: "PROD DEPLOYED",
+    statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/30",
+    tagStyle: "bg-cyan-500/10 text-cyan-300 border-cyan-500/25 group-hover:border-cyan-400",
+    tags: ["Docker", "Linux / Bash", "AWS EC2/S3", "GitHub Actions", "CI/CD", "Nginx", "Terraform"],
   },
   {
     title: "Full-Stack & Systems",
-    icon: "⚡",
-    desc: "Modern type-safe frontend web architectures paired with scalable backend APIs and performant database architectures.",
-    tags: ["TypeScript", "React", "Next.js", "Python", "Tailwind CSS", "REST APIs", "Node.js"],
+    badge: "DISTRIBUTED WEB",
+    icon: <Cpu className="w-6 h-6 text-blue-400" />,
+    iconRing: "bg-blue-500/10 border-blue-500/30 group-hover:border-blue-400 group-hover:shadow-glow-blue",
+    desc: "High-throughput TypeScript architectures paired with reactive React/Next.js frontend systems and low-latency API layers.",
+    status: "ACTIVE CLUSTER",
+    statusColor: "text-blue-400 bg-blue-500/10 border-blue-500/30",
+    tagStyle: "bg-blue-500/10 text-blue-300 border-blue-500/25 group-hover:border-blue-400",
+    tags: ["TypeScript", "Next.js 14", "React", "Python", "Tailwind CSS", "REST APIs", "Node.js", "PostgreSQL"],
   },
   {
     title: "AI & Algorithms",
-    icon: "🧠",
-    desc: "Computer vision pipelines, prompt engineering automation, and discrete graph traversal optimization algorithms.",
-    tags: ["Computer Vision", "Prompt Engineering", "Graph Algorithms", "Data Structures", "OpenCV", "Automation"],
+    badge: "INTELLIGENCE",
+    icon: <Sparkles className="w-6 h-6 text-violet-400" />,
+    iconRing: "bg-violet-500/10 border-violet-500/30 group-hover:border-violet-400 group-hover:shadow-glow-violet",
+    desc: "Computer vision spatial engines, LLM prompt engineering automation, and discrete graph traversal shortest-path algorithms.",
+    status: "EVALUATED 98.4%",
+    statusColor: "text-violet-400 bg-violet-500/10 border-violet-500/30",
+    tagStyle: "bg-violet-500/10 text-violet-300 border-violet-500/25 group-hover:border-violet-400",
+    tags: ["Computer Vision", "OpenCV", "Graph Traversal", "Prompt Automation", "Data Structures", "PyTorch"],
   },
 ];
 
 export default function TechStack() {
   return (
-    <section id="skills" className="relative z-10 w-full px-6 py-28 md:px-12 max-w-[1360px] mx-auto border-t border-carbon/10">
+    <section
+      id="skills"
+      className="relative z-10 w-full px-6 py-24 md:py-28 md:px-12 max-w-7xl mx-auto section-frosted-glass rounded-[40px] my-12 border border-blue-500/20 shadow-2xl text-[#F8FAFC]"
+    >
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
         <div>
-          <span className="font-mono text-xs uppercase tracking-widest text-neutral-500 mb-3 block">
-            Technical Stack · Capabilities
-          </span>
-          <h2 className="text-4xl md:text-6xl font-normal tracking-tight text-neutral-900 font-sans">
-            Engineering Capabilities
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-cyan-500/20 font-mono text-xs text-cyan-400 uppercase tracking-wider mb-4 font-semibold shadow-glow-cyan">
+            <Terminal className="w-3.5 h-3.5" />
+            <span>Telemetry · Architectural Capabilities</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-[#F8FAFC] font-sans">
+            Engineering Systems
           </h2>
         </div>
-        <p className="mt-4 md:mt-0 max-w-md text-sm text-neutral-600 font-sans">
-          Core technologies and architectural paradigms applied across cloud virtualization, backend engineering, and interactive web software.
+        <p className="max-w-md text-sm text-slate-300 font-sans leading-relaxed">
+          Core technologies and architectural paradigms applied across cloud virtualization, backend system reliability, and interactive computing.
         </p>
       </div>
 
-      {/* Dark Obsidian Grid */}
+      {/* Cosmic Glass Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {capabilities.map((item, index) => (
           <TechCard key={index} item={item} />
@@ -53,7 +73,7 @@ export default function TechStack() {
   );
 }
 
-function TechCard({ item }: { item: any }) {
+function TechCard({ item }: { item: typeof capabilities[0] }) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 
@@ -74,44 +94,59 @@ function TechCard({ item }: { item: any }) {
       }}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => soundFx.playClick()}
-      className="relative overflow-hidden rounded-3xl bg-[#1A1918] p-8 text-[#F4EFEB] shadow-xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 cursor-pointer group border border-white/10"
+      className="hardware-accelerated relative overflow-hidden rounded-3xl p-8 cosmic-glass text-[#F8FAFC] cursor-pointer group flex flex-col justify-between transition-all duration-300 border border-slate-800 hover:border-cyan-500/60 shadow-xl"
     >
-      {/* Dynamic Mouse Spotlight Glow */}
+      {/* Dynamic Subtle Spotlight Glow */}
       {isHovered && (
         <div
           className="pointer-events-none absolute -inset-px rounded-3xl transition-opacity duration-300"
           style={{
-            background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 255, 255, 0.08), transparent 80%)`,
+            background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(6, 182, 212, 0.15), transparent 75%)`,
           }}
         />
       )}
 
-      {/* Icon Header */}
-      <div className="relative z-10 w-12 h-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-xl mb-6 shadow-md transition-transform duration-300 group-hover:scale-110">
-        {item.icon}
+      <div>
+        {/* Card Header Bar */}
+        <div className="flex items-center justify-between mb-6 relative z-10">
+          <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center transition-all duration-300 group-hover:scale-110 ${item.iconRing}`}>
+            {item.icon}
+          </div>
+          <span className="font-mono text-[10px] uppercase tracking-widest text-cyan-300 border border-cyan-500/30 px-2.5 py-1 rounded-full bg-slate-900/80 font-semibold shadow-xs">
+            {item.badge}
+          </span>
+        </div>
+
+        {/* Title & Description */}
+        <h3 className="relative z-10 text-2xl font-bold text-[#F8FAFC] mb-3 tracking-tight group-hover:text-cyan-400 transition-colors">
+          {item.title}
+        </h3>
+        <p className="relative z-10 text-xs text-slate-300 font-sans leading-relaxed mb-6">
+          {item.desc}
+        </p>
       </div>
 
-      {/* Title & Description */}
-      <h3 className="relative z-10 text-2xl font-normal text-white mb-3 tracking-tight">
-        {item.title}
-      </h3>
-      <p className="relative z-10 text-xs text-neutral-400 font-sans leading-relaxed mb-8">
-        {item.desc}
-      </p>
-
-      {/* Divider */}
-      <div className="relative z-10 w-full h-[1px] bg-white/10 mb-6" />
-
-      {/* Pill Tags */}
-      <div className="relative z-10 flex flex-wrap gap-2">
-        {item.tags.map((tag: string, i: number) => (
-          <span
-            key={i}
-            className="px-3 py-1 rounded-full text-[11px] font-mono bg-white/10 text-neutral-300 border border-white/10 transition-colors duration-300 group-hover:bg-white/20 group-hover:text-white"
-          >
-            {tag}
+      <div>
+        {/* Status Telemetry Divider */}
+        <div className="relative z-10 flex items-center justify-between border-t border-slate-800 pt-4 mb-4 font-mono text-[10px]">
+          <span className="text-slate-400">OPERATIONAL STATUS</span>
+          <span className={`font-semibold flex items-center gap-1.5 px-2 py-0.5 rounded-full border ${item.statusColor}`}>
+            <span className="h-1.5 w-1.5 rounded-full bg-current animate-pulse" />
+            {item.status}
           </span>
-        ))}
+        </div>
+
+        {/* Monospace Pill Tags */}
+        <div className="relative z-10 flex flex-wrap gap-2">
+          {item.tags.map((tag: string, i: number) => (
+            <span
+              key={i}
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-mono border transition-colors duration-200 ${item.tagStyle}`}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
       </div>
     </motion.div>
   );

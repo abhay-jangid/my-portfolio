@@ -11,8 +11,24 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import { soundFx } from "@/lib/audioEngine";
-import LeavesBackground from "@/components/LeavesBackground";
 import projectsData from "@/data/projects.json";
+
+// Category Accent Helper
+function getCategoryTagStyle(category: string) {
+  switch (category) {
+    case "AI & ML":
+      return "bg-violet-500/15 text-violet-300 border-violet-500/30";
+    case "Algorithms":
+      return "bg-cyan-500/15 text-cyan-300 border-cyan-500/30";
+    case "Cloud & DevOps":
+    case "Systems":
+      return "bg-blue-500/15 text-blue-300 border-blue-500/30";
+    case "Full-Stack":
+      return "bg-sky-500/15 text-sky-300 border-sky-500/30";
+    default:
+      return "bg-amber-500/15 text-amber-300 border-amber-500/30";
+  }
+}
 
 export default function ProjectsGrid() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -58,48 +74,53 @@ export default function ProjectsGrid() {
     <section
       ref={containerRef}
       id="projects"
-      className="relative z-10 w-full px-6 py-28 md:px-12 max-w-[1360px] mx-auto overflow-visible"
+      className="relative z-10 w-full px-6 py-28 md:px-12 max-w-[1360px] mx-auto overflow-visible section-frosted-glass rounded-[40px] my-12 border border-blue-500/20 shadow-2xl"
     >
-      {/* 3D Interactive Falling Leaves Background */}
-      <LeavesBackground />
+      {/* Faint 4% Radial Nebula Bloom anchored behind card stack */}
+      <div className="pointer-events-none absolute inset-0 rounded-[40px] overflow-hidden">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gradient-to-tr from-cyan-500/10 via-blue-500/10 to-emerald-500/10 rounded-full blur-[140px]" />
+      </div>
 
       {/* Title & Filter Matrix */}
       <div className="relative z-10 flex flex-col items-center text-center mb-20 md:mb-28">
-        <span className="font-mono text-xs uppercase tracking-widest text-neutral-500 mb-3">
-          Curated Works · 2024–2026
-        </span>
-        <h2 className="text-4xl md:text-7xl font-normal tracking-tight text-neutral-900 font-sans mb-10">
-          Selected Projects
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 font-mono text-xs text-cyan-400 uppercase tracking-wider mb-4 font-semibold shadow-glow-cyan">
+          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+          <span>// Deployment Registry · 2024–2026</span>
+        </div>
+        <h2 className="text-4xl md:text-7xl font-bold tracking-tight text-[#F8FAFC] font-sans mb-8">
+          Featured Deployments
         </h2>
 
+        {/* Filter Pills */}
         <div className="flex flex-wrap justify-center gap-2 md:gap-3">
           {categories.map((cat) => {
             const isActive = activeCategory === cat.label;
             return (
               <button
                 key={cat.label}
+                type="button"
                 data-cursor="Filter"
                 onClick={() => {
                   soundFx.playClick();
                   setActiveCategory(cat.label);
                 }}
                 onMouseEnter={() => soundFx.playHover()}
-                className={`relative px-4 py-1.5 rounded-full text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+                className={`relative px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-300 cursor-pointer border ${
                   isActive
-                    ? "bg-[#1A1918] text-[#F4EFEB]"
-                    : "bg-neutral-200/70 text-neutral-700 hover:bg-neutral-300/80"
+                    ? "bg-gradient-to-r from-cyan-500 to-blue-600 border-transparent text-white shadow-glow-cyan"
+                    : "bg-[#0F172A]/80 border-slate-700/80 text-slate-300 hover:bg-[#1E293B] hover:text-white hover:border-cyan-500/40 shadow-xs"
                 }`}
               >
                 <span>{cat.label}</span>
-                <sup className="ml-1 text-[9px] opacity-75">{cat.count}</sup>
+                <sup className="ml-1 text-[9px] opacity-80 font-mono">{cat.count}</sup>
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Dual Column Spacetime Stage */}
-      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-18 items-start">
+      {/* Dual Column 3D Spacetime Stage */}
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-18 items-start group/grid">
         {/* Left Column Track */}
         <div className="flex flex-col gap-16 md:gap-24">
           <AnimatePresence mode="popLayout">
@@ -142,50 +163,52 @@ function SpacetimeCard({
   mouseNorm,
   smoothVelocity,
 }: {
-  project: any;
+  project: {
+    id: string;
+    title: string;
+    description?: string;
+    category: string;
+    tags?: string[];
+    image?: string;
+  };
   index: number;
   isRightCol: boolean;
   mouseNorm: { x: number; y: number };
-  smoothVelocity: any;
+  smoothVelocity: unknown;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // Measure card's normalized travel across the viewport (0 = enter bottom, 1 = exit top)
+  // Measure card's normalized travel across the viewport
   const { scrollYProgress } = useScroll({
     target: cardRef,
     offset: ["start end", "end start"],
   });
 
-  // 1. HYPERBOLIC CATENARY Z-DEPTH (Center is flush at 0, top plunges to -520px)
   const translateZ = useTransform(
     scrollYProgress,
     [0, 0.35, 0.65, 1],
     [-60, 20, -180, -520]
   );
 
-  // 2. HORIZON PITCH (Tilts forward entering, rolls back departing)
   const rotateX = useTransform(
     scrollYProgress,
     [0, 0.35, 0.65, 1],
     [-8, 0, 16, 36]
   );
 
-  // 3. SCALE CONTRACTION
   const scale = useTransform(
     scrollYProgress,
     [0, 0.35, 0.65, 1],
     [0.96, 1, 0.94, 0.82]
   );
 
-  // 4. VELOCITY TORSION (Aerodynamic banking on fast scrolls)
   const torsionAngle = isRightCol ? 4.5 : -4.5;
   const rotateZ = useTransform(
-    smoothVelocity,
+    smoothVelocity as ReturnType<typeof useSpring>,
     [-2500, 0, 2500],
     [-torsionAngle, 0, torsionAngle]
   );
 
-  // 5. GYROSCOPIC MAGNETIC YAW (Follows mouse cursor with spring damping)
   const mouseInfluence = isRightCol ? mouseNorm.x - 0.25 : mouseNorm.x + 0.25;
   const targetYaw = mouseInfluence * 9.0;
   const yawMv = useMotionValue(targetYaw);
@@ -195,18 +218,13 @@ function SpacetimeCard({
     yawMv.set(targetYaw);
   }, [targetYaw, yawMv]);
 
-  // 6. SYNTHETIC OPTICAL DEPTH-OF-FIELD (Defocus blur + falloff shadow at distance)
   const blurAmount = useTransform(
     scrollYProgress,
     [0, 0.35, 0.65, 1],
     ["blur(0px)", "blur(0px)", "blur(1.5px)", "blur(6px)"]
   );
 
-  const depthShadow = useTransform(
-    scrollYProgress,
-    [0.35, 0.65, 1],
-    [0, 0.18, 0.48]
-  );
+  const tagStyle = getCategoryTagStyle(project.category);
 
   return (
     <div
@@ -227,41 +245,61 @@ function SpacetimeCard({
         }}
         transition={{ duration: 0.15 }}
         onMouseEnter={() => soundFx.playHover()}
-        data-cursor="Explore"
-        className="group flex flex-col cursor-pointer will-change-transform"
+        onClick={() => soundFx.playClick()}
+        data-cursor="Inspect"
+        className="hardware-accelerated group relative rounded-3xl p-6 md:p-8 cosmic-glass group-hover/grid:opacity-30 hover:!opacity-100 flex flex-col justify-between cursor-pointer transition-all duration-300 z-10 hover:z-30 border border-slate-800 hover:border-cyan-500/60 shadow-xl"
       >
-        {/* Crisp Frame with Ambient Occlusion */}
-        <div className="relative w-full aspect-[16/11] overflow-hidden rounded-2xl bg-neutral-200 shadow-xl transition-shadow duration-500 group-hover:shadow-2xl">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-            loading="lazy"
-          />
+        <div>
+          {/* Image Preview Container */}
+          {project.image && (
+            <div className="relative w-full aspect-[16/10] overflow-hidden rounded-2xl bg-slate-900 border border-slate-800 mb-6 shadow-inner">
+              <img
+                src={project.image}
+                alt={project.title}
+                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+                <span className="font-mono text-[10px] font-semibold uppercase tracking-wider bg-slate-900/90 backdrop-blur-md text-cyan-400 px-2.5 py-1 rounded-md border border-cyan-500/30 shadow-xs flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  DEPLOYED
+                </span>
+                <span className={`font-mono text-[10px] font-semibold px-2.5 py-1 rounded-md border backdrop-blur-md ${tagStyle}`}>
+                  {project.category}
+                </span>
+              </div>
+            </div>
+          )}
 
-          {/* Depth of field shadow falloff */}
-          <motion.div
-            style={{ opacity: depthShadow }}
-            className="pointer-events-none absolute inset-0 bg-neutral-950 transition-opacity duration-300"
-          />
+          {/* Card Header & Content */}
+          <div className="flex items-center justify-between mb-3">
+            <span className={`px-3 py-1 rounded-full text-xs font-mono font-semibold border ${tagStyle}`}>
+              {project.category}
+            </span>
+            <span className="text-2xl text-slate-400 font-light transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-cyan-400">
+              ↗
+            </span>
+          </div>
 
-          {/* Subtle cursor reflection glint */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <h3 className="text-2xl font-bold text-[#F8FAFC] mb-2 group-hover:text-cyan-400 transition-colors tracking-tight">
+            {project.title}
+          </h3>
+          <p className="text-slate-300 text-sm leading-relaxed mb-6 font-normal">
+            {project.description ||
+              "Engineered cloud architectures, optimized low-latency runtime services, and containerized microservices."}
+          </p>
         </div>
 
-        {/* Editorial Metadata */}
-        <div className="mt-5 flex items-start justify-between">
-          <div>
-            <h3 className="text-xl md:text-2xl font-normal text-neutral-900 group-hover:underline tracking-tight">
-              {project.title}
-            </h3>
-            <p className="mt-1 text-xs text-neutral-500 font-sans">
-              {project.tags ? project.tags.join(" · ") : project.category}
-            </p>
-          </div>
-          <span className="text-2xl text-neutral-500 font-light transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1">
-            ↘
-          </span>
+        {/* Tech tags */}
+        <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-800/80">
+          {(project.tags || [project.category]).map((t: string, i: number) => (
+            <span
+              key={i}
+              className="px-2.5 py-1 rounded-md text-xs font-mono bg-[#1E293B]/70 text-slate-300 border border-slate-700 font-medium transition-colors duration-200 group-hover:border-cyan-500/40 group-hover:text-cyan-300"
+            >
+              {t}
+            </span>
+          ))}
         </div>
       </motion.article>
     </div>

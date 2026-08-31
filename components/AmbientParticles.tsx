@@ -41,12 +41,12 @@ export default function AmbientParticles() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+      className="hardware-accelerated pointer-events-none fixed inset-0 z-0 overflow-hidden"
     >
       {STATIC_PARTICLES.map((p) => (
         <motion.div
           key={p.id}
-          className="absolute rounded-full bg-neutral-800/15 blur-[0.5px]"
+          className="hardware-accelerated absolute rounded-full bg-neutral-800/15 blur-[0.5px]"
           style={{
             top: p.top,
             left: p.left,
